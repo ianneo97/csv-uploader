@@ -1,16 +1,14 @@
-import FileUploadIcon from '@mui/icons-material/FileUpload';
 import {
     Backdrop,
     Box,
     CircularProgress,
-    Modal,
     Snackbar,
 } from '@mui/material';
 import axios from 'axios';
 import MaterialTable from 'material-table';
 import * as React from 'react';
-import Dropzone from 'react-dropzone';
 import Header from '../components/Header';
+import { Upload } from '../components/Upload';
 
 interface FileLinkResponse {
     file_name: string;
@@ -70,51 +68,6 @@ export default function MainPage() {
         window.open(response.data.file_url);
     };
 
-    const handleClose = (_: any, reason: string) => {
-        setUploadMode(false);
-        setAlignment('recent');
-    };
-
-    const onDrop = (uploaded_files: File[]) => {
-        setFiles([...files, ...uploaded_files]);
-    };
-
-    const uploadFiles = async () => {
-        setLoading(true);
-        setUploadMode(false);
-
-        const response: FileLinkResponse[] = await Promise.all(
-            files.map(async (file) => {
-                const response = await axios.post<FileLinkResponse>(
-                    'http://localhost:8080/generate-url/upload',
-                    { file_name: file.name }
-                );
-
-                return { ...response.data, file: file };
-            })
-        );
-
-        await Promise.all(
-            response.map(async (file: FileLinkResponse) => {
-                const form_data = new FormData();
-                form_data.append('file', file.file);
-
-                await axios.put(file.file_url, form_data);
-            })
-        );
-
-        const timer = setTimeout(() => {
-            setFiles([]);
-            setUploadMode(false);
-            setOpen(true);
-            setMessage('File uploaded successfully');
-            setAlignment('recent');
-            setLoading(false);
-        }, 2000);
-
-        return () => clearTimeout(timer);
-    };
-
     React.useEffect(() => {
         async function fetchData() {
             const response = await axios.get<FileListResponse>(
@@ -154,80 +107,17 @@ export default function MainPage() {
                 />
             </Backdrop>
 
-            <Modal
-                open={uploadMode}
-                onClose={(event, reason) => handleClose(event, reason)}
-                disableEscapeKeyDown={true}
-            >
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        width: 400,
-                        bgcolor: 'background.paper',
-                        transform: 'translate(-50%, -50%)',
-                        boxShadow: 24,
-                        p: 4,
-                        border: '1px solid #000',
-                    }}
-                >
-                    <div>
-                        <Dropzone onDrop={onDrop}>
-                            {({ getRootProps, getInputProps }) => (
-                                <section>
-                                    <Box
-                                        sx={{
-                                            p: 4,
-                                            border: '1px dashed',
-                                            textAlign: 'center',
-                                        }}
-                                    >
-                                        <FileUploadIcon
-                                            sx={{
-                                                color: '#bbbbbb',
-                                                fontSize: '46px',
-                                            }}
-                                        />
-                                        <div {...getRootProps()}>
-                                            <input {...getInputProps()} />
-                                            {files &&
-                                            Array.isArray(files) &&
-                                            files.length > 0 ? (
-                                                <div className="selected-file">
-                                                    {files.length > 3
-                                                        ? `${files.length} files`
-                                                        : files
-                                                              .map(
-                                                                  (file) =>
-                                                                      file.name
-                                                              )
-                                                              .join(', ')}
-                                                </div>
-                                            ) : (
-                                                `Drag and drop files here, or click to select files`
-                                            )}
-                                        </div>
-                                    </Box>
-                                    <br />
-                                    <aside className="selected-file-wrapper">
-                                        <button
-                                            className="btn btn-success"
-                                            disabled={!files}
-                                            onClick={uploadFiles}
-                                            style={{
-                                                float: 'right',
-                                            }}
-                                        >
-                                            Upload
-                                        </button>
-                                    </aside>
-                                </section>
-                            )}
-                        </Dropzone>
-                    </div>
-                </Box>
-            </Modal>
+            <Upload
+                uploadMode={uploadMode}
+                files={files}
+                setUploadMode={setUploadMode}
+                setAlignment={setAlignment}
+                setFiles={setFiles}
+                setLoading={setLoading}
+                setOpen={setOpen}
+                setMessage={setMessage}
+            />
+
             <Box
                 sx={{
                     display: 'flex',
