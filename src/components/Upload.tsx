@@ -20,6 +20,8 @@ interface FileLinkResponse {
     file: File;
 }
 
+const url = process.env.BACKEND_URL;
+
 export function Upload(props: UploadProps) {
     const {
         uploadMode,
@@ -48,7 +50,7 @@ export function Upload(props: UploadProps) {
         const response: FileLinkResponse[] = await Promise.all(
             files.map(async (file) => {
                 const response = await axios.post<FileLinkResponse>(
-                    'http://localhost:8080/generate-url/upload',
+                    `${url}/generate-url/upload`,
                     { file_name: file.name }
                 );
 

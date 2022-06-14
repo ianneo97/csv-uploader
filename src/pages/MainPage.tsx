@@ -22,6 +22,8 @@ interface FileListResponse {
     file_list: FileResponse[];
 }
 
+const url = process.env.BACKEND_URL;
+
 export default function MainPage() {
     const navigate = useNavigate();
     const [alignment, setAlignment] = React.useState('recent');
@@ -57,7 +59,11 @@ export default function MainPage() {
                         >
                             Download File
                         </button>
-                        <button onClick={() => {redirectLink(rowData.file_id)}}>
+                        <button
+                            onClick={() => {
+                                redirectLink(rowData.file_id);
+                            }}
+                        >
                             List File Info
                         </button>
                     </div>
@@ -68,7 +74,7 @@ export default function MainPage() {
 
     const generatePresignedUrl = async (file_name: string) => {
         const response = await axios.post<FileLinkResponse>(
-            'http://localhost:8080/generate-url/download',
+            `${url}/generate-url/download`,
             { file_name: file_name }
         );
 
@@ -76,13 +82,13 @@ export default function MainPage() {
     };
 
     const redirectLink = async (file_id: string) => {
-        navigate("/file/" + file_id);
-    }
+        navigate('/file/' + file_id);
+    };
 
     React.useEffect(() => {
         async function fetchData() {
             const response = await axios.get<FileListResponse>(
-                'http://localhost:8080/file-list'
+                `${url}/file-list`
             );
             setData(response.data.file_list);
         }

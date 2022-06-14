@@ -28,6 +28,8 @@ interface FileInfoResponse {
     country: string;
 }
 
+const url = process.env.BACKEND_URL;
+
 export default function FileInfoPage() {
     const navigate = useNavigate();
     const { file_id } = useParams();
@@ -68,7 +70,7 @@ export default function FileInfoPage() {
 
     const searchData = async () => {
         const response = await axios.post<FileInfoResponse[]>(
-            `http://localhost:8080/reader/${file_id}`,
+            `${url}/reader/${file_id}`,
             { option: searchOption, value: searchInput }
         );
 
@@ -76,10 +78,10 @@ export default function FileInfoPage() {
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
+        if (event.key === 'Enter') {
             searchData();
         }
-    }
+    };
 
     const backToMainPage = () => {
         navigate('/');
@@ -88,7 +90,7 @@ export default function FileInfoPage() {
     React.useEffect(() => {
         async function fetchData() {
             const response = await axios.post<FileInfoResponse[]>(
-                `http://localhost:8080/reader/${file_id}`
+                `${url}/reader/${file_id}`
             );
             setData(response.data);
         }
@@ -131,7 +133,11 @@ export default function FileInfoPage() {
                             onChange={(
                                 event: React.ChangeEvent<HTMLInputElement>
                             ) => handleSearchInputChange(event)}
-                            onKeyDown={(event: React.KeyboardEvent<HTMLInputElement>) => {handleKeyDown(event)}}
+                            onKeyDown={(
+                                event: React.KeyboardEvent<HTMLInputElement>
+                            ) => {
+                                handleKeyDown(event);
+                            }}
                         />
                     </Grid>
 
@@ -149,7 +155,7 @@ export default function FileInfoPage() {
                         </Button>
                         <Button
                             variant="outlined"
-                            style={{ height: '100%', marginRight: "16px" }}
+                            style={{ height: '100%', marginRight: '16px' }}
                             onClick={() => searchData()}
                         >
                             Search
