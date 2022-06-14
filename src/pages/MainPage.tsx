@@ -1,12 +1,8 @@
-import {
-    Backdrop,
-    Box,
-    CircularProgress,
-    Snackbar,
-} from '@mui/material';
+import { Backdrop, Box, CircularProgress, Snackbar } from '@mui/material';
 import axios from 'axios';
 import MaterialTable from 'material-table';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { Upload } from '../components/Upload';
 
@@ -27,6 +23,7 @@ interface FileListResponse {
 }
 
 export default function MainPage() {
+    const navigate = useNavigate();
     const [alignment, setAlignment] = React.useState('recent');
     const [data, setData] = React.useState<FileResponse[]>([]);
     const [files, setFiles] = React.useState<File[]>([]);
@@ -49,11 +46,21 @@ export default function MainPage() {
             field: 'download_line',
             render: (rowData: FileResponse) => {
                 return (
-                    <button
-                        onClick={() => generatePresignedUrl(rowData.file_name)}
-                    >
-                        Download File
-                    </button>
+                    <div>
+                        <button
+                            onClick={() =>
+                                generatePresignedUrl(rowData.file_name)
+                            }
+                            style={{
+                                marginRight: '10px',
+                            }}
+                        >
+                            Download File
+                        </button>
+                        <button onClick={() => {redirectLink(rowData.file_id)}}>
+                            List File Info
+                        </button>
+                    </div>
                 );
             },
         },
@@ -67,6 +74,10 @@ export default function MainPage() {
 
         window.open(response.data.file_url);
     };
+
+    const redirectLink = async (file_id: string) => {
+        navigate("/file/" + file_id);
+    }
 
     React.useEffect(() => {
         async function fetchData() {

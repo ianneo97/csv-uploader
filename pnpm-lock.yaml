@@ -9,6 +9,7 @@ specifiers:
   '@mui/lab': 5.0.0-alpha.84
   '@mui/material': ^5.8.2
   '@mui/styles': ^5.8.0
+  '@mui/x-data-grid': ^5.12.1
   '@testing-library/jest-dom': ^5.16.4
   '@testing-library/react': ^13.3.0
   '@testing-library/user-event': ^13.5.0
@@ -16,6 +17,8 @@ specifiers:
   '@types/node': ^16.11.38
   '@types/react': ^18.0.12
   '@types/react-dom': ^18.0.5
+  ag-grid-community: ^27.3.0
+  ag-grid-react: ^27.3.0
   axios: ^0.27.2
   material-table: ^2.0.3
   pnpm: ^7.1.9
@@ -36,6 +39,7 @@ dependencies:
   '@mui/lab': 5.0.0-alpha.84_4d5ucng2hei3ay2qfo64whlps4
   '@mui/material': 5.8.2_b3paoylv2eq5sxjah6ov6v6pji
   '@mui/styles': 5.8.0_cbpnieqasrszcwkqeh5i7z7nse
+  '@mui/x-data-grid': 5.12.1_lmugqmgmtb32xerlkoaaj5sivy
   '@testing-library/jest-dom': 5.16.4
   '@testing-library/react': 13.3.0_ef5jwxihqo6n7gxfmzogljlgcm
   '@testing-library/user-event': 13.5.0
@@ -43,6 +47,8 @@ dependencies:
   '@types/node': 16.11.38
   '@types/react': 18.0.12
   '@types/react-dom': 18.0.5
+  ag-grid-community: 27.3.0
+  ag-grid-react: 27.3.0_gwca254o2ga6we6y6qf6xxdski
   axios: 0.27.2
   material-table: 2.0.3_numea74644a7a3bwpznnle32wi
   pnpm: 7.1.9
@@ -2443,6 +2449,25 @@ packages:
       react-is: 17.0.2
     dev: false
 
+  /@mui/x-data-grid/5.12.1_lmugqmgmtb32xerlkoaaj5sivy:
+    resolution: {integrity: sha512-kOhmCqaI87c411uUHnojsaSgebvzkMbQXtw0lVGmNDcxWTugsxH0n7FC7+KVOc/EKyGRifvgIpiKKB17BI61pg==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@mui/material': ^5.4.1
+      '@mui/system': ^5.4.1
+      react: ^17.0.2 || ^18.0.0
+      react-dom: ^17.0.2 || ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.18.3
+      '@mui/material': 5.8.2_b3paoylv2eq5sxjah6ov6v6pji
+      '@mui/utils': 5.8.0_react@18.1.0
+      clsx: 1.1.1
+      prop-types: 15.8.1
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+      reselect: 4.1.6
+    dev: false
+
   /@mui/x-date-pickers/5.0.0-alpha.1_rx6fcso25xe3xqamemicf6wyri:
     resolution: {integrity: sha512-dLPkRiIn2Gr0momblxiOnIwrxn4SijVix+8e08mwAGWhiWcmWep1O9XTRDpZsjB0kjHYCf+kZjlRX4dxnj2acg==}
     engines: {node: '>=12.0.0'}
@@ -3423,6 +3448,23 @@ packages:
     dependencies:
       loader-utils: 2.0.2
       regex-parser: 2.2.11
+    dev: false
+
+  /ag-grid-community/27.3.0:
+    resolution: {integrity: sha512-R5oZMXEHXnOLrmhn91J8lR0bv6IAnRcU6maO+wKLMJxffRWaAYFAuw1jt7bdmcKCv8c65F6LEBx4ykSOALa9vA==}
+    dev: false
+
+  /ag-grid-react/27.3.0_gwca254o2ga6we6y6qf6xxdski:
+    resolution: {integrity: sha512-2bs9YfJ/shvBZQLLjny4NFvht+ic6VtpTPO0r3bHHOhlL3Fjx2rGvS6AHSwfvu+kJacHCta30PjaEbX8T3UDyw==}
+    peerDependencies:
+      ag-grid-community: ~27.3.0
+      react: ^16.3.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      ag-grid-community: 27.3.0
+      prop-types: 15.8.1
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
     dev: false
 
   /agent-base/6.0.2:
@@ -9300,6 +9342,10 @@ packages:
 
   /requires-port/1.0.0:
     resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
+    dev: false
+
+  /reselect/4.1.6:
+    resolution: {integrity: sha512-ZovIuXqto7elwnxyXbBtCPo9YFEr3uJqj2rRbcOOog1bmu2Ag85M4hixSwFWyaBMKXNgvPaJ9OSu9SkBPIeJHQ==}
     dev: false
 
   /resolve-cwd/3.0.0:
